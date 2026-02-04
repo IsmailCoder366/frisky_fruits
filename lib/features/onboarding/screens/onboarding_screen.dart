@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../core/widgets/frisky_button.dart';
 import '../logic/onboarding_bloc.dart';
 import '../logic/onboarding_event.dart';
 import '../logic/onboarding_state.dart';
@@ -96,34 +97,61 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               const SizedBox(height: 40),
 
               // Next Button
+              // Inside lib/features/onboarding/screens/onboarding_screen.dart
+
+              // Inside lib/features/onboarding/screens/onboarding_screen.dart
+
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 60,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primaryOrange,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                child: state.currentIndex == 2
+                    ? Column(
+                  children: [
+                    // 1. Create Account Button (Solid Black as per image)
+                    FriskyButton(
+                      text: "Create an account",
+                      backgroundColor: Colors.black,
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, '/signup');
+                      },
+                      textColor: state.currentIndex == 2
+                        ? Colors.white : Colors.black
                     ),
-                    onPressed: () {
-                      if (state.currentIndex < 2) {
-                        _pageController.nextPage(
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeIn
-                        );
-                      } else {
-                        Navigator.pushReplacementNamed(context, '/login');
-                      }
-                    },
-                    child: state.currentIndex < 2 ?  Text(
-                      "NEXT",
-                      style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
-                    )  : Text(
-                      "SUBMIT",
-                      style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
-                    )
-                  ),
+                    const SizedBox(height: 16),
+                    // 2. Login Button (White with Black Border as per image)
+                    SizedBox(
+                      width: double.infinity,
+                      height: 60,
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          side: const BorderSide(color: Colors.black, width: 2),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(context, '/login');
+                        },
+                        child: const Text(
+                          "LOGIN",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+                    : FriskyButton(
+                  textColor: Colors.black,
+                  text: "Next",
+                  onPressed: () {
+                    _pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeIn,
+                    );
+                  },
                 ),
               ),
             ],
