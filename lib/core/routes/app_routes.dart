@@ -4,12 +4,12 @@ abstract class Routes {
   static const onboarding = '/onboarding';
 
   // Auth
-  static const login = '/login';
+  static const login = '/signin';
   static const signup = '/signup';
   static const forgotPassword = '/forgotPassword';
 
-  // User Module
-  static const userHome = '/userHome';
+  // home
+  static const home = '/home';
 
   // Creator Module
   static const creatorMain = '/creatorMain';

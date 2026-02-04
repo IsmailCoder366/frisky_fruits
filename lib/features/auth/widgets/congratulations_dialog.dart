@@ -41,6 +41,9 @@ class _CongratulationsDialogState extends State<CongratulationsDialog> {
       child: ClipRRect( // Ensures confetti/images don't bleed out of rounded corners
         borderRadius: BorderRadius.circular(30),
         child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white
+          ),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
           child: Stack(
             alignment: Alignment.center,
@@ -53,7 +56,7 @@ class _CongratulationsDialogState extends State<CongratulationsDialog> {
                 colors: const [Colors.green, Colors.blue, Colors.pink, Colors.orange, Colors.purple],
               ),
 
-              // 2. The Static Celebration Image (Layered correctly)
+
               Opacity(
                 opacity: 0.5,
                 child: Image.asset(
@@ -83,11 +86,13 @@ class _CongratulationsDialogState extends State<CongratulationsDialog> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 140), // Space where the confetti/image is densest
+                  const SizedBox(height: 140),
                   FriskyButton(
                     textColor: Colors.black,
                     text: "Sign In",
-                    onPressed: widget.onSignIn,
+                    onPressed: (){
+                      Navigator.pushNamed(context, '/signin');
+                    }
                   ),
                 ],
               ),

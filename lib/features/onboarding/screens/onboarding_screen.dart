@@ -46,7 +46,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 TextButton(
                   onPressed: () {
                     // Skip directly to Login
-                    Navigator.pushReplacementNamed(context, '/login');
+                    Navigator.pushReplacementNamed(context, '/signin');
                   },
                   child: const Text(
                     "Skip",
@@ -132,7 +132,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.pushReplacementNamed(context, '/login');
+                          Navigator.pushReplacementNamed(context, '/home');
                         },
                         child: const Text(
                           "LOGIN",

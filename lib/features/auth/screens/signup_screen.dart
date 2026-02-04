@@ -25,8 +25,6 @@ class SignupScreen extends StatelessWidget {
             ),
           ),
 
-
-
           /// 2. Container
           Align(
             alignment: Alignment.bottomCenter,
@@ -46,17 +44,24 @@ class SignupScreen extends StatelessWidget {
                       children: [
                         const Text(
                           "Create your account",
-                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         CircleAvatar(
                           backgroundColor: Colors.black,
                           radius: 15,
                           child: IconButton(
                             padding: EdgeInsets.zero,
-                            icon: const Icon(Icons.close, color: Colors.white, size: 18),
+                            icon: const Icon(
+                              Icons.close,
+                              color: Colors.white,
+                              size: 18,
+                            ),
                             onPressed: () {},
                           ),
-                        )
+                        ),
                       ],
                     ),
                     const SizedBox(height: 30),
@@ -64,7 +69,9 @@ class SignupScreen extends StatelessWidget {
                     // First & Last Name Row
                     Row(
                       children: const [
-                        Expanded(child: FriskyTextField(hintText: "First Name")),
+                        Expanded(
+                          child: FriskyTextField(hintText: "First Name"),
+                        ),
                         SizedBox(width: 15),
                         Expanded(child: FriskyTextField(hintText: "Last Name")),
                       ],
@@ -88,15 +95,23 @@ class SignupScreen extends StatelessWidget {
                         text: const TextSpan(
                           style: TextStyle(color: Colors.black, fontSize: 14),
                           children: [
-                            TextSpan(text: "By tapping Sign up you accept all\n"),
                             TextSpan(
-                                text: "terms ",
-                                style: TextStyle(color: AppColors.primaryOrange, fontWeight: FontWeight.bold)
+                              text: "By tapping Sign up you accept all\n",
+                            ),
+                            TextSpan(
+                              text: "terms ",
+                              style: TextStyle(
+                                color: AppColors.primaryOrange,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             TextSpan(text: "and "),
                             TextSpan(
-                                text: "condition",
-                                style: TextStyle(color: AppColors.primaryOrange, fontWeight: FontWeight.bold)
+                              text: "condition",
+                              style: TextStyle(
+                                color: AppColors.primaryOrange,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ],
                         ),
@@ -114,16 +129,33 @@ class SignupScreen extends StatelessWidget {
                         // 2. Show the pop-up on success
                         showDialog(
                           context: context,
-                          barrierDismissible: false, // User must click "Sign In"
+                          barrierDismissible: false,
+                          // User must click "Sign In"
                           builder: (context) => CongratulationsDialog(
-                            userName: "ismail", // This would come from your controllers
+                            userName: "ismail",
+                            // This would come from your controllers
                             onSignIn: () {
-                              Navigator.pop(context); // Close dialog
-                              onSignIn: () => Navigator.pushReplacementNamed(context, Routes.login);
+                              Navigator.pushReplacementNamed(
+                                context,
+                                Routes.login,
+                              );
                             },
                           ),
                         );
                       },
+                    ),
+                    SizedBox(height: 30),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Already have an account?"),
+                        InkWell(
+                          onTap: (){
+                            Navigator.pushNamed(context, '/signin');
+                          },
+                          child: Text('signin'),
+                        )
+                      ],
                     ),
                   ],
                 ),
@@ -134,7 +166,4 @@ class SignupScreen extends StatelessWidget {
       ),
     );
   }
-
-
-
 }
