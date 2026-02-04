@@ -1,0 +1,138 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../core/constants/app_colors.dart';
+import '../logic/onboarding_bloc.dart';
+import '../logic/onboarding_event.dart';
+import '../logic/onboarding_state.dart';
+import '../widgets/onboarding_body.dart';
+import '../widgets/onboarding_dot.dart';
+
+class OnboardingScreen extends StatefulWidget {
+  const OnboardingScreen({super.key});
+
+  @override
+  State<OnboardingScreen> createState() => _OnboardingScreenState();
+}
+
+class _OnboardingScreenState extends State<OnboardingScreen> {
+  final PageController _pageController = PageController();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<OnboardingBloc, OnboardingState>(
+      builder: (context, state) {
+        return Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            // 1. DYNAMIC BACK BUTTON: Only show if NOT on the first page
+            leading: state.currentIndex > 0
+                ? IconButton(
+              icon: const Icon(Icons.arrow_back, color: AppColors.primaryOrange),
+              onPressed: () {
+                _pageController.previousPage(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeIn,
+                );
+              },
+            )
+                : null,
+            actions: [
+              // 2. SKIP BUTTON: Show only on the first page (index 0)
+              if (state.currentIndex == 0)
+                TextButton(
+                  onPressed: () {
+                    // Skip directly to Login
+                    Navigator.pushReplacementNamed(context, '/login');
+                  },
+                  child: const Text(
+                    "Skip",
+                    style: TextStyle(
+                      color: AppColors.primaryOrange,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+            ],
+          ),
+          body: Column(
+            children: [
+              Expanded(
+                child: PageView(
+                  controller: _pageController,
+                  onPageChanged: (index) =>
+                      context.read<OnboardingBloc>().add(PageChanged(index)),
+                  children: const [
+                    OnboardingBody(
+                      image: 'assets/images/onboarding1.png',
+                      title: 'Welcome to Fresh Fruits',
+                      subtitle: 'Grocery application',
+                      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                    ),
+                    OnboardingBody(
+                      image: 'assets/images/onboarding2.png',
+                      title: 'Fast Delivery',
+                      subtitle: 'Direct to your door',
+                      description: 'Fresh fruits delivered to your home within 30 minutes.',
+                    ),
+                    OnboardingBody(
+                      image: 'assets/images/onboarding3.png',
+                      title: 'Secure Payment',
+                      subtitle: 'New concept included',
+                      description: 'Integrated with Stripe for a frisky shopping experience.',
+                    ),
+                  ],
+                ),
+              ),
+
+              // Dot Indicators
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(3, (index) =>
+                    OnboardingDot(index: index, currentIndex: state.currentIndex)
+                ),
+              ),
+
+              const SizedBox(height: 40),
+
+              // Next Button
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 60,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primaryOrange,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                    ),
+                    onPressed: () {
+                      if (state.currentIndex < 2) {
+                        _pageController.nextPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeIn
+                        );
+                      } else {
+                        Navigator.pushReplacementNamed(context, '/login');
+                      }
+                    },
+                    child: state.currentIndex < 2 ?  Text(
+                      "NEXT",
+                      style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                    )  : Text(
+                      "SUBMIT",
+                      style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                    )
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
