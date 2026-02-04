@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 class OnboardingBody extends StatelessWidget {
   final String image;
   final String title;
-  final String subtitle;
+  final String?subtitle;
   final String description;
 
   const OnboardingBody({
     super.key,
     required this.image,
     required this.title,
-    required this.subtitle,
+     this.subtitle,
     required this.description,
   });
 
@@ -29,10 +29,7 @@ class OnboardingBody extends StatelessWidget {
             style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10),
-          Text(
-            subtitle,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-          ),
+
           const SizedBox(height: 20),
           Text(
             description,

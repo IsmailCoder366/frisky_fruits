@@ -68,20 +68,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   children: const [
                     OnboardingBody(
                       image: 'assets/images/onboarding1.png',
-                      title: 'Welcome to Fresh Fruits',
-                      subtitle: 'Grocery application',
+                      title: 'Welcome to Fresh Fruits\nGrocery application',
                       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
                     ),
                     OnboardingBody(
                       image: 'assets/images/onboarding2.png',
-                      title: 'Fast Delivery',
-                      subtitle: 'Direct to your door',
+                      title: 'We provide best quality\nFruits to your family',
                       description: 'Fresh fruits delivered to your home within 30 minutes.',
                     ),
                     OnboardingBody(
                       image: 'assets/images/onboarding3.png',
-                      title: 'Secure Payment',
-                      subtitle: 'New concept included',
+                      title: 'Fast and responsibily\ndelivery by our courir ',
                       description: 'Integrated with Stripe for a frisky shopping experience.',
                     ),
                   ],
@@ -121,10 +118,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     },
                     child: state.currentIndex < 2 ?  Text(
                       "NEXT",
-                      style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
                     )  : Text(
                       "SUBMIT",
-                      style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
                     )
                   ),
                 ),
