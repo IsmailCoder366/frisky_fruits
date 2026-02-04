@@ -90,7 +90,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(3, (index) =>
-                    OnboardingDot(index: index, currentIndex: state.currentIndex)
+                    OnboardingDot(
+
+                        onTap: () {
+                          _pageController.animateToPage(
+                            index,
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                        index: index, currentIndex: state.currentIndex)
                 ),
               ),
 
