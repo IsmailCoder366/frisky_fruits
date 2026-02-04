@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'core/routes/app_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'core/routes/app_pages.dart';
+import 'core/routes/app_routes.dart';
+import 'features/onboarding/logic/onboarding_bloc.dart';
+
 
 void main() {
   runApp(const FriskyFruitsApp());
@@ -10,12 +14,19 @@ class FriskyFruitsApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Frisky Fruits',
-      initialRoute: '/',
-      // We call the combined map here
-      routes: AppRouter.allRoutes,
+    return MultiBlocProvider(
+      providers: [
+        // Global BLoCs available to all 160 pages
+        BlocProvider(create: (context) => OnboardingBloc()),
+        // BlocProvider(create: (context) => LoginBloc()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Frisky Fruits',
+        initialRoute: Routes.splash,
+        // Native Flutter routing table
+        routes: AppPages.getPages(),
+      ),
     );
   }
 }
