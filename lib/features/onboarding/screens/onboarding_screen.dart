@@ -110,7 +110,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 child: state.currentIndex == 2
                     ? Column(
                   children: [
-                    // 1. Create Account Button (Solid Black as per image)
                     FriskyButton(
                       text: "Create an account",
                       backgroundColor: Colors.black,
