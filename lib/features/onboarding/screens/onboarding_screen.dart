@@ -96,11 +96,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
               const SizedBox(height: 40),
 
-              // Next Button
-              // Inside lib/features/onboarding/screens/onboarding_screen.dart
-
-              // Inside lib/features/onboarding/screens/onboarding_screen.dart
-
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
                 child: state.currentIndex == 2

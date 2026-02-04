@@ -1,9 +1,5 @@
-// lib/main.dart
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'features/onboarding/logic/onboarding_bloc.dart';
-import 'features/splash/screens/splash_screen.dart';
-import 'features/onboarding/screens/onboarding_screen.dart';
+import 'core/routes/app_router.dart';
 
 void main() {
   runApp(const FriskyFruitsApp());
@@ -16,15 +12,10 @@ class FriskyFruitsApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      title: 'Frisky Fruits',
       initialRoute: '/',
-      routes: {
-        '/': (context) => const SplashScreen(),
-        // WRAP THE SCREEN HERE
-        '/onboarding': (context) => BlocProvider(
-          create: (context) => OnboardingBloc(),
-          child: const OnboardingScreen(),
-        ),
-      },
+      // We call the combined map here
+      routes: AppRouter.allRoutes,
     );
   }
 }
