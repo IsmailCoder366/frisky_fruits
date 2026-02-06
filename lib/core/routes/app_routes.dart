@@ -12,5 +12,5 @@ abstract class Routes {
   static const home = '/home';
 
   // Creator Module
-  static const creatorMain = '/creatorMain';
+    static const rootScreen = '/RootScreen';
 }

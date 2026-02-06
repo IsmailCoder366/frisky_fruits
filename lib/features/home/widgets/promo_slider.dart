@@ -12,47 +12,50 @@ class PromoSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 180,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: images.length,
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        itemBuilder: (context, index) {
-          return Container(
-            width: MediaQuery.of(context).size.width * 0.85,
-            margin: const EdgeInsets.symmetric(horizontal: 8),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              image: DecorationImage(
-                // Logic: Access the specific image for this index
-                image: AssetImage(images[index]),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Container(
-              padding: const EdgeInsets.all(20),
+    return GestureDetector(
+      // onTap: () => ,
+      child: SizedBox(
+        height: 180,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: images.length,
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          itemBuilder: (context, index) {
+            return Container(
+              width: MediaQuery.of(context).size.width * 0.85,
+              margin: const EdgeInsets.symmetric(horizontal: 8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                gradient: LinearGradient(
-                  colors: [Colors.black.withOpacity(0.6), Colors.transparent],
-                  begin: Alignment.bottomLeft,
+                image: DecorationImage(
+                  // Logic: Access the specific image for this index
+                  image: AssetImage(images[index]),
+                  fit: BoxFit.cover,
                 ),
               ),
-              child: Align(
-                alignment: Alignment.bottomLeft,
-                child: Text(
-                  titles[index], // Logic: Access the specific title
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: LinearGradient(
+                    colors: [Colors.black.withOpacity(0.6), Colors.transparent],
+                    begin: Alignment.bottomLeft,
+                  ),
+                ),
+                child: Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Text(
+                    titles[index], // Logic: Access the specific title
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

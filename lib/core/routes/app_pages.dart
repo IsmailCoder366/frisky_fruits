@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frisky_fruits/features/auth/screens/signin_screen.dart';
+import 'package:frisky_fruits/features/root/screens/root_screen.dart';
 import '../../features/auth/screens/signup_screen.dart';
 import '../../features/home/screens/home_screen.dart';
 import '../../features/splash/screens/splash_screen.dart';
@@ -16,6 +17,7 @@ class AppPages {
       Routes.login: (context) => const SigninScreen(),
       Routes.signup: (context) => const SignupScreen(),
       Routes.home: (context) => const HomeScreen(),
+      Routes.rootScreen: (context) => const RootScreen(),
 
       // Placeholders for your two modules
       // Routes.userHome: (context) => const UserHomeScreen(),

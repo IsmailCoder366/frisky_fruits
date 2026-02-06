@@ -13,7 +13,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: _buildBottomNav(),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
@@ -97,67 +96,4 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNav() {
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      selectedItemColor: Colors.orange,
-      unselectedItemColor: Colors.grey,
-      showSelectedLabels: false,
-      showUnselectedLabels: false,
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
-        BottomNavigationBarItem(icon: Icon(Icons.swap_horiz), label: ""),
-        BottomNavigationBarItem(icon: Icon(Icons.shopping_cart_outlined), label: ""),
-        BottomNavigationBarItem(icon: Icon(Icons.favorite_border), label: ""),
-        BottomNavigationBarItem(icon: CircleAvatar(radius: 12, backgroundImage: AssetImage('assets/images/profile.png')), label: ""),
-      ],
-    );
-  }
-
-  Widget _buildPromoBanner() {
-    return SizedBox(
-      height: 180, // 1. Give the ListView a specific height
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: 3,
-        // Optional: Add padding so the first/last items aren't stuck to the screen edges
-        padding: const EdgeInsets.symmetric(horizontal: 5),
-        itemBuilder: (context, index) {
-          return Container(
-            // 2. Change double.infinity to a fixed width (e.g., screen width minus padding)
-            width: MediaQuery.of(context).size.width * 0.85,
-            margin: const EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              image: const DecorationImage(
-                image: AssetImage('assets/images/promo_banner_1.png'),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                gradient: LinearGradient(
-                  colors: [Colors.black.withOpacity(0.6), Colors.transparent],
-                  begin: Alignment.bottomLeft,
-                ),
-              ),
-              child: const Align(
-                alignment: Alignment.bottomLeft,
-                child: Text(
-                  "Recommended\nRecipe Today",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold
-                  ),
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
 }

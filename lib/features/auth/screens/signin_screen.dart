@@ -89,7 +89,7 @@ class SigninScreen extends StatelessWidget {
                       textColor: Colors.black,
                       text: "SIGN IN",
                       onPressed: () {
-                        Navigator.pushNamed(context, '/home');
+                        Navigator.pushNamed(context, Routes.rootScreen);
                       },
                     ),
                     SizedBox(height: 30),
