@@ -14,7 +14,7 @@ class SectionHeader extends StatelessWidget {
         Text(title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
         IconButton(
           onPressed: onActionPressed,
-          icon: const Icon(Icons.arrow_forward),
+          icon: const Icon(Icons.arrow_forward, color: Colors.black, fontWeight: FontWeight.bold),
         ),
       ],
     );

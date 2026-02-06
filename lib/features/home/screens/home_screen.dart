@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../widgets/home_header.dart';
 import '../widgets/category_card.dart';
 import '../widgets/deal_card.dart';
+import '../widgets/promo_slider.dart';
 import '../widgets/section_header.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -21,7 +22,18 @@ class HomeScreen extends StatelessWidget {
             children: [
               const HomeHeader(userName: "ismail"),
               const SizedBox(height: 25),
-              _buildPromoBanner(),
+              PromoSlider(
+                images: const [
+                  'assets/images/promo_banner_1.png',
+                  'assets/images/promo_banner_2.png',
+                  'assets/images/promo_banner_3.png',
+                ],
+                titles: const [
+                  "Recommended\nRecipe Today",
+                  "Fresh Fruit\nDiscounts",
+                  "Healthy Living\nTips",
+                ],
+              ),
               const SizedBox(height: 25),
               const SectionHeader(title: "Categories"),
               _buildCategoryList(),
@@ -61,9 +73,9 @@ class HomeScreen extends StatelessWidget {
       crossAxisSpacing: 15,
       mainAxisSpacing: 15,
       children: const [
-        DealCard(title: "Avocado", price: "\$6.7", imagePath: 'assets/images/avocado.png'),
-        DealCard(title: "Brocoli", price: "\$8.7", imagePath: 'assets/images/broccoli.png'),
-        DealCard(title: "Tomatoes", price: "\$4.9", imagePath: 'assets/images/tomatoes.png'),
+        DealCard(title: "Avocado", price: "\$6.7", imagePath: 'assets/images/avocadro.png'),
+        DealCard(title: "Brocoli", price: "\$8.7", imagePath: 'assets/images/brocoli.png'),
+        DealCard(title: "Tomato", price: "\$4.9", imagePath: 'assets/images/tomato.png'),
         DealCard(title: "Grapes", price: "\$7.2", imagePath: 'assets/images/grapes.png'),
       ],
     );
@@ -71,6 +83,7 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildMoreButton() {
     return SizedBox(
+      height: 50,
       width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -102,62 +115,49 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildPromoBanner() {
-
-    return Container(
-
-      height: 180,
-
-      width: double.infinity,
-
-      decoration: BoxDecoration(
-
-        borderRadius: BorderRadius.circular(20),
-
-        image: const DecorationImage(
-
-          image: AssetImage('assets/images/promo_banner.png'),
-
-          fit: BoxFit.cover,
-
-        ),
-
+    return SizedBox(
+      height: 180, // 1. Give the ListView a specific height
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: 3,
+        // Optional: Add padding so the first/last items aren't stuck to the screen edges
+        padding: const EdgeInsets.symmetric(horizontal: 5),
+        itemBuilder: (context, index) {
+          return Container(
+            // 2. Change double.infinity to a fixed width (e.g., screen width minus padding)
+            width: MediaQuery.of(context).size.width * 0.85,
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              image: const DecorationImage(
+                image: AssetImage('assets/images/promo_banner_1.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                gradient: LinearGradient(
+                  colors: [Colors.black.withOpacity(0.6), Colors.transparent],
+                  begin: Alignment.bottomLeft,
+                ),
+              ),
+              child: const Align(
+                alignment: Alignment.bottomLeft,
+                child: Text(
+                  "Recommended\nRecipe Today",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
       ),
-
-      child: Container(
-
-        padding: const EdgeInsets.all(20),
-
-        decoration: BoxDecoration(
-
-          borderRadius: BorderRadius.circular(20),
-
-          gradient: LinearGradient(
-
-            colors: [Colors.black.withOpacity(0.6), Colors.transparent],
-
-            begin: Alignment.bottomLeft,
-
-          ),
-
-        ),
-
-        child: const Align(
-
-          alignment: Alignment.bottomLeft,
-
-          child: Text(
-
-            "Recommended\nRecipe Today",
-
-            style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-
-          ),
-
-        ),
-
-      ),
-
     );
-
   }
 }
