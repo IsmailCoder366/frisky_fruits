@@ -5,8 +5,9 @@ import '../../../core/navigation/bloc/navigation_bloc.dart';
 import '../../../core/navigation/bloc/navigation_event.dart';
 
 class CategoryCard extends StatelessWidget {
-  final IconData icon;
-  const CategoryCard({super.key, required this.icon});
+
+  final String images;
+  const CategoryCard({super.key, required this.images});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class CategoryCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [BoxShadow(color: Colors.grey.shade200, blurRadius: 5, spreadRadius: 2)],
         ),
-        child: Icon(icon, color: Colors.purple, size: 30),
+        child: Image(image: AssetImage(images))
       ),
     );
   }

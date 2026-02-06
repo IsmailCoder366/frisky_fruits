@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../core/navigation/bloc/navigation_bloc.dart';
+import '../../../core/navigation/bloc/navigation_event.dart';
 
 class PromoSlider extends StatelessWidget {
   final List<String> images; // List of dynamic images
@@ -13,7 +17,9 @@ class PromoSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // onTap: () => ,
+      onTap: () {
+        context.read<NavigationBloc>().add(TabChanged(1));
+      },
       child: SizedBox(
         height: 180,
         child: ListView.builder(
