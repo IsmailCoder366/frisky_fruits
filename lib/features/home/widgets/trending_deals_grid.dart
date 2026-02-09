@@ -11,7 +11,7 @@ class TrendingDealsGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        context.read<NavigationBloc>().add(TabChanged(1));
+        context.read<NavigationBloc>().add(TabChanged(2));
       },
       child: GridView.count(
         shrinkWrap: true,

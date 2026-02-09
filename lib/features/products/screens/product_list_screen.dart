@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../core/constants/app_colors.dart';
+import '../../../core/navigation/bloc/navigation_bloc.dart';
+import '../../../core/navigation/bloc/navigation_event.dart';
 import '../widgets/product_grid_item.dart';
 import '../models/product_model.dart';
 
@@ -10,12 +14,12 @@ class ProductListScreen extends StatelessWidget {
     // Mock data for display
     final List<ProductModel> products = [
       const ProductModel(name: "Avocado", price: "\$6.7", imagePath: 'assets/images/avocadro.png', isFavorite: true),
-      const ProductModel(name: "Blueberry", price: "\$8.7", imagePath: 'assets/images/sugar_free.png'),
-      const ProductModel(name: "Blueberry", price: "\$8.7", imagePath: 'assets/images/orange.png'),
-      const ProductModel(name: "Blueberry", price: "\$8.7", imagePath: 'assets/images/banana.png'),
-      const ProductModel(name: "Blueberry", price: "\$8.7", imagePath: 'assets/images/tomatoes.png'),
-      const ProductModel(name: "Blueberry", price: "\$8.7", imagePath: 'assets/images/grapes_juice.png'),
-      const ProductModel(name: "Blueberry", price: "\$8.7", imagePath: 'assets/images/avocado.png'),
+      const ProductModel(name: "Sugar Free", price: "\$8.7", imagePath: 'assets/images/sugar_free.png'),
+      const ProductModel(name: "Orange", price: "\$8.7", imagePath: 'assets/images/orange.png'),
+      const ProductModel(name: "Banana", price: "\$8.7", imagePath: 'assets/images/banana.png'),
+      const ProductModel(name: "Tomatoes", price: "\$8.7", imagePath: 'assets/images/tomatoes.png'),
+      const ProductModel(name: "Grapes", price: "\$8.7", imagePath: 'assets/images/grapes_juice.png'),
+      const ProductModel(name: "Avocado", price: "\$8.7", imagePath: 'assets/images/avocado.png'),
       const ProductModel(name: "Blueberry", price: "\$8.7", imagePath: 'assets/images/blueberry.png'),
 
     ];
@@ -24,11 +28,10 @@ class ProductListScreen extends StatelessWidget {
       backgroundColor: const Color(0xFFF8F9FB),
       body: Column(
         children: [
-          // Yellow Header Section
           Container(
             padding: const EdgeInsets.only(top: 50, left: 20, right: 20, bottom: 30),
             decoration: const BoxDecoration(
-              color: Color(0xFFFFCC4D), // Matches Deals.jpg yellow
+              color: AppColors.primaryOrange,
               borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
             ),
             child: Column(
@@ -38,7 +41,9 @@ class ProductListScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Icon(Icons.arrow_back, color: Colors.white),
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.tune, color: Colors.white)),
+                    IconButton(onPressed: () {
+                      context.read<NavigationBloc>().add(TabChanged(2));
+                    }, icon: const Icon(Icons.tune, color: Colors.white)),
                   ],
                 ),
                 const SizedBox(height: 20),
@@ -56,8 +61,8 @@ class ProductListScreen extends StatelessWidget {
                   TextField(
                     decoration: InputDecoration(
                       hintText: "Search here",
-                      prefixIcon: const Icon(Icons.search),
-                      fillColor: Colors.white,
+                      suffixIcon: const Icon(Icons.search),
+                      fillColor: Color(0xffF0F0F0),
                       filled: true,
                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: BorderSide.none),
                     ),

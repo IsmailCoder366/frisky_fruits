@@ -10,7 +10,6 @@ abstract class Routes {
 
   // home
   static const home = '/home';
-
-  // Creator Module
-    static const rootScreen = '/RootScreen';
+  static const rootScreen = '/RootScreen';
+  static const productDetails = '/productDetails';
 }
