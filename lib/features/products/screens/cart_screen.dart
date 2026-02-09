@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../core/constants/app_colors.dart';
 import '../bloc/cart_bloc/cart_bloc.dart';
 import '../bloc/cart_bloc/cart_state.dart';
 import '../bloc/cart_bloc/cart_event.dart';
@@ -20,6 +21,9 @@ class CartScreen extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
+        actions: [
+          Text('Place Order', style: TextStyle(color: AppColors.orangeText))
+        ],
       ),
       body: BlocBuilder<CartBloc, CartState>(
         builder: (context, state) {

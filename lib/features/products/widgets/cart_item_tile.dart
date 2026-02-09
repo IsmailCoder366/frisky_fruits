@@ -15,7 +15,7 @@ class CartItemTile extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      padding: const EdgeInsets.only(left: 15, right: 10, top: 15, bottom: 15),
       child: Row(
         children: [
           // 1. Image + Unit Price Badge
@@ -86,7 +86,7 @@ class CartItemTile extends StatelessWidget {
                           fontWeight: FontWeight.bold
                       ),
                     ),
-
+                    Spacer(),
                     // --- QUANTITY FIX ---
                     _buildQuantityCounter(product.quantity),
                   ],
