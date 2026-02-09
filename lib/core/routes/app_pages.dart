@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:frisky_fruits/features/auth/screens/signin_screen.dart';
+import 'package:frisky_fruits/features/products/screens/cart_screen.dart';
 import 'package:frisky_fruits/features/root/screens/root_screen.dart';
 import '../../features/auth/screens/signup_screen.dart';
 import '../../features/home/screens/home_screen.dart';
 import '../../features/products/screens/product_details_screen.dart';
 import '../../features/splash/screens/splash_screen.dart';
 import '../../features/onboarding/screens/onboarding_screen.dart';
-
 import 'app_routes.dart';
 
 class AppPages {
@@ -20,6 +20,7 @@ class AppPages {
       Routes.home: (context) => const HomeScreen(),
       Routes.rootScreen: (context) => const RootScreen(),
       Routes.productDetails: (context) => const ProductDetailsScreen(),
+      Routes.cartScreen: (context) => const CartScreen(),
 
       // Placeholders for your two modules
       // Routes.userHome: (context) => const UserHomeScreen(),

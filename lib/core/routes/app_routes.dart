@@ -12,4 +12,5 @@ abstract class Routes {
   static const home = '/home';
   static const rootScreen = '/RootScreen';
   static const productDetails = '/productDetails';
+  static const cartScreen = '/cart';
 }

@@ -4,6 +4,7 @@ import 'core/navigation/bloc/navigation_bloc.dart';
 import 'core/routes/app_pages.dart';
 import 'core/routes/app_routes.dart';
 import 'features/onboarding/logic/onboarding_bloc.dart';
+import 'features/products/bloc/cart_bloc/cart_bloc.dart';
 
 
 void main() {
@@ -20,7 +21,7 @@ class FriskyFruitsApp extends StatelessWidget {
 
         BlocProvider(create: (context) => OnboardingBloc()),
         BlocProvider(create: (context) => NavigationBloc()),
-        // BlocProvider(create: (context) => LoginBloc()),
+        BlocProvider<CartBloc>(create: (context) => CartBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
