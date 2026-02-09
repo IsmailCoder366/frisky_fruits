@@ -6,6 +6,7 @@ import '../../../core/navigation/bloc/navigation_state.dart';
 import '../../../core/navigation/bloc/navigation_event.dart';
 import '../../home/screens/home_screen.dart';
 import '../../categories/screens/categories_screen.dart';
+import '../../products/screens/product_list_screen.dart';
 
 class RootScreen extends StatelessWidget {
   const RootScreen({super.key});
@@ -16,7 +17,7 @@ class RootScreen extends StatelessWidget {
     final List<Widget> pages = [
       const HomeScreen(),
       const CategoriesScreen(), // Index 1 from your image
-      const Center(child: Text("Cart")),
+      const ProductListScreen(),
       const Center(child: Text("Favorites")),
       const Center(child: Text("Profile")),
     ];
