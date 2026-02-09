@@ -58,7 +58,7 @@ class HomeScreen extends StatelessWidget {
 
               const SizedBox(height: 20),
               HomeMoreButton(onPressed: () {
-                // Logic for more deals
+                context.read<NavigationBloc>().add(TabChanged(2));
               }),
             ],
           ),
