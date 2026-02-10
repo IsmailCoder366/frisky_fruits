@@ -32,7 +32,7 @@ class OrderSuccessScreen extends StatelessWidget {
                     },
                   ),
                 ),
-                SizedBox(width: 110),
+                SizedBox(width: 50),
                 Text('Thank You', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),)
 
               ],

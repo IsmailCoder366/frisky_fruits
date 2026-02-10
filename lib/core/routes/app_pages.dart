@@ -4,6 +4,7 @@ import 'package:frisky_fruits/features/checkout/screen/checkout_screen.dart';
 import 'package:frisky_fruits/features/checkout/screen/order_success.dart';
 import 'package:frisky_fruits/features/checkout/screen/order_tracking_screen.dart';
 import 'package:frisky_fruits/features/checkout/screen/payment_method_screen.dart';
+import 'package:frisky_fruits/features/checkout/screen/write_review.dart';
 import 'package:frisky_fruits/features/products/screens/cart_screen.dart';
 import 'package:frisky_fruits/features/root/screens/root_screen.dart';
 import '../../features/auth/screens/signup_screen.dart';
@@ -29,6 +30,7 @@ class AppPages {
       Routes.paymentMethod: (context) => const PaymentMethodScreen(),
       Routes.orderSuccess: (context) => const OrderSuccessScreen(),
       Routes.orderTracking: (context) => const OrderTrackingScreen(),
+      Routes.writeReview: (context) => const WriteReviewScreen(),
 
       // Placeholders for your two modules
       // Routes.userHome: (context) => const UserHomeScreen(),

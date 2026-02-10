@@ -20,6 +20,7 @@ class OrderTrackingScreen extends StatelessWidget {
               mainAxisAlignment: .start,
               children: [
                 CircleAvatar(
+                  radius: 18,
                   backgroundColor: const Color(0xFFF2994A),
                   child: IconButton(
                     icon: const Icon(Icons.close, color: Colors.white, size: 20),
@@ -68,7 +69,7 @@ class OrderTrackingScreen extends StatelessWidget {
             FriskyButton(
               text: 'SUBMIT REVIEW',
               onPressed: () {
-                // Logic for reviews
+                Navigator.pushNamed(context, '/write_review');
               },
               textColor: Colors.black,
             ),

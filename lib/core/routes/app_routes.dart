@@ -17,4 +17,5 @@ abstract class Routes {
   static const  paymentMethod = '/paymentMethod';
   static const  orderSuccess = '/order_success';
   static const  orderTracking = '/order_tracking';
+  static const  writeReview = '/write_review';
 }
