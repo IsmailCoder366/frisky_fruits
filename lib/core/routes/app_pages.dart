@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frisky_fruits/features/auth/screens/signin_screen.dart';
+import 'package:frisky_fruits/features/checkout/screen/checkout_screen.dart';
+import 'package:frisky_fruits/features/checkout/screen/order_success.dart';
+import 'package:frisky_fruits/features/checkout/screen/payment_method_screen.dart';
 import 'package:frisky_fruits/features/products/screens/cart_screen.dart';
 import 'package:frisky_fruits/features/root/screens/root_screen.dart';
 import '../../features/auth/screens/signup_screen.dart';
@@ -21,6 +24,9 @@ class AppPages {
       Routes.rootScreen: (context) => const RootScreen(),
       Routes.productDetails: (context) => const ProductDetailsScreen(),
       Routes.cartScreen: (context) => const CartScreen(),
+      Routes.checkout: (context) => const CheckoutScreen(),
+      Routes.paymentMethod: (context) => const PaymentMethodScreen(),
+      Routes.orderSuccess: (context) => const OrderSuccessScreen(),
 
       // Placeholders for your two modules
       // Routes.userHome: (context) => const UserHomeScreen(),

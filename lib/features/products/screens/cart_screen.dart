@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../core/constants/app_colors.dart';
+import '../../../core/routes/app_routes.dart';
 import '../bloc/cart_bloc/cart_bloc.dart';
-import '../bloc/cart_bloc/cart_state.dart';
 import '../bloc/cart_bloc/cart_event.dart';
+import '../bloc/cart_bloc/cart_state.dart';
 import '../widgets/cart_item_tile.dart';
 
 class CartScreen extends StatelessWidget {
@@ -11,6 +13,8 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const double horizontalPadding = 25.0;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("My Cart",
@@ -22,42 +26,51 @@ class CartScreen extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
-          Text('Place Order', style: TextStyle(color: AppColors.orangeText))
+          // Aligning the text by wrapping it in Padding to match the body
+          Padding(
+            padding: const EdgeInsets.only(right: horizontalPadding),
+            child: Center(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, Routes.checkout);
+                },
+                child: Text(
+                    'Place Order',
+                    style: TextStyle(
+                      color: AppColors.orangeText,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    )
+                ),
+              ),
+            ),
+          )
         ],
       ),
       body: BlocBuilder<CartBloc, CartState>(
         builder: (context, state) {
           if (state.items.isEmpty) {
             return const Center(
-              child: Text(
-                "Your cart is empty!",
-                style: TextStyle(fontSize: 18, color: Colors.grey),
-              ),
+              child: Text("Your cart is empty!"),
             );
           }
 
           return ListView.builder(
             itemCount: state.items.length,
-            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+            // Right horizontal padding matches the AppBar's action padding
+            padding: const EdgeInsets.symmetric(
+                horizontal: horizontalPadding,
+                vertical: 20
+            ),
             itemBuilder: (context, index) {
               final product = state.items[index];
-
-              // --- PRICE LOGIC FIX ---
-              // Extract the numeric value (e.g., "$7.2" -> 7.2)
-              final double unitPrice = double.tryParse(
-                  product.price.replaceAll('\$', '')
-              ) ?? 0.0;
-
-              // Multiply by quantity if your product model stores it,
-              // otherwise, it uses the unit price.
-              final String displayPrice = "\$${unitPrice.toStringAsFixed(1)}";
 
               return Dismissible(
                 key: Key('${product.name}_$index'),
                 direction: DismissDirection.endToStart,
                 background: Container(
                   alignment: Alignment.centerRight,
-                  padding: const EdgeInsets.only(right: 25),
+                  padding: const EdgeInsets.only(right: 20),
                   margin: const EdgeInsets.only(bottom: 15),
                   decoration: BoxDecoration(
                     color: Colors.redAccent.withOpacity(0.9),
@@ -67,21 +80,12 @@ class CartScreen extends StatelessWidget {
                 ),
                 onDismissed: (direction) {
                   context.read<CartBloc>().add(RemoveFromCart(product));
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("${product.name} removed from cart"),
-                      backgroundColor: Colors.black87,
-                      duration: const Duration(seconds: 1),
-                    ),
-                  );
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 15),
                   child: CartItemTile(
                     product: product,
                     category: "FRUITS",
-                    // Ensure your CartItemTile accepts a 'price' parameter
-                    // or uses the product.price correctly
                   ),
                 ),
               );

@@ -13,4 +13,7 @@ abstract class Routes {
   static const rootScreen = '/RootScreen';
   static const productDetails = '/productDetails';
   static const cartScreen = '/cart';
+  static const  checkout = '/checkout';
+  static const  paymentMethod = '/paymentMethod';
+  static const  orderSuccess = '/order_success';
 }
