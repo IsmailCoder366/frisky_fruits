@@ -18,6 +18,7 @@ class OrderSuccessScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
 
+            /// backbutton and text
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -37,14 +38,15 @@ class OrderSuccessScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: 20),
-            // 1. Delivery Illustration
+
+            /// Delivery Illustration
             Image.asset(
               'assets/images/track_order.png', // Add your image here
               height: MediaQuery.of(context).size.height * 0.35,
             ),
             const SizedBox(height: 40),
 
-            // 2. Success Text
+            /// Success Text
             const Text(
               "Your Order in process",
               textAlign: TextAlign.center,
@@ -56,7 +58,7 @@ class OrderSuccessScreen extends StatelessWidget {
             ),
             const SizedBox(height: 15),
 
-            // 3. Description
+            ///  Description
             const Text(
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod",
               textAlign: TextAlign.center,
@@ -68,11 +70,11 @@ class OrderSuccessScreen extends StatelessWidget {
             ),
             const Spacer(),
 
-            // 4. Track Order Button
+            /// submit review button
             FriskyButton(
               text: 'TRACK YOUR ORDER',
               onPressed: () {
-                // Future: Navigate to Order Tracking Screen
+                Navigator.pushNamed(context, '/order_tracking');
               },
               textColor: Colors.black,
             ),
