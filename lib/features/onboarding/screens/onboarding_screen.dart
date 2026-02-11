@@ -132,7 +132,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.pushReplacementNamed(context, '/RootScreen');
+                          Navigator.pushReplacementNamed(context, '/signin');
                         },
                         child: const Text(
                           "LOGIN",
