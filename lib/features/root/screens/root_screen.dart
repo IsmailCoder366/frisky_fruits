@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frisky_fruits/features/profiles/screens/profile.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/navigation/bloc/navigation_bloc.dart';
 import '../../../core/navigation/bloc/navigation_state.dart';
 import '../../../core/navigation/bloc/navigation_event.dart';
+import '../../favorites/screen/favorite.dart';
 import '../../home/screens/home_screen.dart';
 import '../../categories/screens/categories_screen.dart';
 import '../../products/screens/product_list_screen.dart';
@@ -18,8 +20,8 @@ class RootScreen extends StatelessWidget {
       const HomeScreen(),
       const CategoriesScreen(), // Index 1 from your image
       const ProductListScreen(),
-      const Center(child: Text("Favorites")),
-      const Center(child: Text("Profile")),
+      const FavoritesScreen(),
+      const ProfileScreen()
     ];
 
     return BlocBuilder<NavigationBloc, NavigationState>(

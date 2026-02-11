@@ -6,12 +6,15 @@ class FriskyTextField extends StatefulWidget {
   final bool isPassword;
   final TextEditingController? controller;
   final TextInputType keyboardType;
+  // 1. You need to define the field here
+  final String? Function(String?)? validator;
 
   const FriskyTextField({
     super.key,
     required this.hintText,
     this.isPassword = false,
     this.controller,
+    this.validator, // 2. Add it to the named parameters
     this.keyboardType = TextInputType.text,
   });
 
@@ -26,13 +29,25 @@ class _FriskyTextFieldState extends State<FriskyTextField> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
+      // 3. Link the validator to the TextFormField
+      validator: widget.validator,
       obscureText: widget.isPassword ? _obscureText : false,
       keyboardType: widget.keyboardType,
       decoration: InputDecoration(
         hintText: widget.hintText,
         hintStyle: const TextStyle(color: Colors.grey),
         contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-        // Orange Border Style from Image
+
+        // 4. Add error borders so the user sees the red line when validation fails
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+          borderSide: const BorderSide(color: Colors.red, width: 1),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+          borderSide: const BorderSide(color: Colors.red, width: 2),
+        ),
+
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
           borderSide: BorderSide(
@@ -44,7 +59,6 @@ class _FriskyTextFieldState extends State<FriskyTextField> {
           borderRadius: BorderRadius.circular(30),
           borderSide: const BorderSide(color: AppColors.primaryOrange, width: 2),
         ),
-        // Password Eye Icon
         suffixIcon: widget.isPassword
             ? IconButton(
           icon: Icon(

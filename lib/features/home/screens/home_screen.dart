@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/navigation/bloc/navigation_bloc.dart';
 import '../../../core/navigation/bloc/navigation_event.dart';
-
-// Your new extracted widgets
 import '../widgets/home_header.dart';
 import '../widgets/promo_slider.dart';
 import '../widgets/section_header.dart';
