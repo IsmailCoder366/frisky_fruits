@@ -50,10 +50,10 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             );
           } else if (state is AuthError) {
-            // 👈 1. Clear existing snackbars to prevent double pop-ups
+
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-            // 👈 2. Show the fresh error message
+
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
@@ -112,7 +112,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             ),
                             const SizedBox(height: 30),
 
-                            // Name Fields
+
                             Row(
                               children: [
                                 Expanded(
@@ -134,7 +134,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             ),
                             const SizedBox(height: 15),
 
-                            // Email & Password
+
                             FriskyTextField(
                               controller: _emailController,
                               hintText: "Email address",
@@ -179,7 +179,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             ),
                             const SizedBox(height: 30),
 
-                            // Switch to Login
+
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
