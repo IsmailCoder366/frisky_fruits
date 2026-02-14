@@ -1,7 +1,9 @@
 import 'dart:async'; // Required for Timer
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:frisky_fruits/core/constants/app_colors.dart';
 
+import '../../../core/routes/app_routes.dart';
 import '../../onboarding/screens/onboarding_screen.dart';
 // Import your next screen here, e.g.:
 // import '../../onboarding/screens/onboarding_screen.dart';
@@ -19,10 +21,20 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 3), () {
-      // Navigate using the route name we defined in main.dart
-      Navigator.pushReplacementNamed(context, '/onboarding');
-      print("Navigated to Onboarding");
+      _checkNavigation();
+
     });
+  }
+  void _checkNavigation() {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      // 👈 User is logged in, go straight to Home
+      Navigator.pushReplacementNamed(context, Routes.rootScreen);
+    } else {
+      // User is not logged in, show Onboarding
+      Navigator.pushReplacementNamed(context, Routes.onboarding);
+    }
   }
 
   @override
