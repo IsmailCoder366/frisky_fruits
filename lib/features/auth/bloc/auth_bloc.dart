@@ -40,16 +40,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     });
 
-    // SIGN IN LOGIC
     on<SignInRequested>((event, emit) async {
       emit(AuthLoading());
       try {
-        await _auth.signInWithEmailAndPassword(
+        UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: event.email,
           password: event.password,
         );
-        await _auth.currentUser?.reload();
-        emit(Authenticated(_auth.currentUser!.uid));
+
+        // Force a reload to ensure the profile (displayName) is synced locally
+        await userCredential.user?.reload();
+
+        emit(Authenticated(userCredential.user!.uid));
       } on FirebaseAuthException catch (e) {
         emit(AuthError(AuthExceptionHandler.handleException(e.code)));
       } catch (e) {

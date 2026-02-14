@@ -22,6 +22,7 @@ class ProfileScreen extends StatelessWidget {
       },
       child: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
+          final user = FirebaseAuth.instance.currentUser;
           return Stack(
             children: [
               Scaffold(
@@ -38,41 +39,39 @@ class ProfileScreen extends StatelessWidget {
                       const SizedBox(height: 20),
 
                       // Profile Header with Firestore Data
-                      FutureBuilder<DocumentSnapshot>(
-                        future: FirebaseFirestore.instance.collection('users').doc(user?.uid).get(),
+
+                      StreamBuilder<DocumentSnapshot>(
+                        stream: FirebaseFirestore.instance.collection('users').doc(user?.uid).snapshots(),
                         builder: (context, snapshot) {
-                          String displayName = "Loading...";
-                          String displayEmail = user?.email ?? "No Email";
+                          // 1. Default values while loading or if data is missing
+                          String name = "Loading...";
+                          String email = user?.email ?? "No Email";
 
                           if (snapshot.hasData && snapshot.data!.exists) {
                             final data = snapshot.data!.data() as Map<String, dynamic>;
-                            displayName = data['name'] ?? "User";
+                            // 2. Fetch the name we saved during SignUpRequested
+                            name = data['name'] ?? "User";
                           }
 
                           return Column(
                             children: [
-                              Stack(
-                                alignment: Alignment.bottomRight,
-                                children: [
-                                  const CircleAvatar(
-                                    radius: 60,
-                                    backgroundImage: AssetImage('assets/images/profile_pic.png'),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.all(4),
-                                    decoration: const BoxDecoration(color: Color(0xFFF2994A), shape: BoxShape.circle),
-                                    child: const Icon(Icons.camera_alt, color: Colors.white, size: 20),
-                                  ),
-                                ],
+                              const CircleAvatar(
+                                radius: 60,
+                                backgroundImage: AssetImage('assets/images/profile_pic.png'),
                               ),
                               const SizedBox(height: 15),
-                              Text(displayName, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-                              Text(displayEmail, style: const TextStyle(color: Colors.grey, fontSize: 14)),
+                              Text(
+                                name, // 👈 This will now update as soon as Firestore responds
+                                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                email,
+                                style: const TextStyle(color: Colors.grey, fontSize: 14),
+                              ),
                             ],
                           );
                         },
                       ),
-
                       const SizedBox(height: 30),
 
                       // Menu Options (UI preserved exactly as requested)
@@ -87,7 +86,17 @@ class ProfileScreen extends StatelessWidget {
                             const Divider(),
                             _buildProfileTile(
                               Icons.logout, "Logout",
-                              state is AuthLoading ? () {} : () => context.read<AuthBloc>().add(SignOutRequested()),
+                              state is AuthLoading ? () {}
+                                  : () {
+                                context.read<AuthBloc>().add(SignOutRequested());
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  Routes.login,
+                                      (route) => false,
+                                );
+                              },
+
+
                               textColor: Colors.red, iconColor: Colors.red,
                             ),
                           ],
@@ -125,3 +134,4 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 }
+

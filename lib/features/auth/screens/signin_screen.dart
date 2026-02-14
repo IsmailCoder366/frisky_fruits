@@ -92,7 +92,7 @@ class _SigninScreenState extends State<SigninScreen> {
                                   child: IconButton(
                                     padding: EdgeInsets.zero,
                                     icon: const Icon(Icons.close, color: Colors.white, size: 18),
-                                    onPressed: () => Navigator.pop(context),
+                                    onPressed: () {}
                                   ),
                                 )
                               ],

@@ -4,6 +4,7 @@ import 'core/navigation/bloc/navigation_bloc.dart';
 import 'core/routes/app_pages.dart';
 import 'core/routes/app_routes.dart';
 import 'features/auth/bloc/auth_bloc.dart';
+import 'features/auth/bloc/auth_state.dart';
 import 'features/onboarding/logic/onboarding_bloc.dart';
 import 'features/products/bloc/cart_bloc/cart_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -32,12 +33,21 @@ class FriskyFruitsApp extends StatelessWidget {
         BlocProvider(create: (context) => NavigationBloc()),
         BlocProvider<CartBloc>(create: (context) => CartBloc()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Frisky Fruits',
-        initialRoute: Routes.splash,
-        // Native Flutter routing table
-        routes: AppPages.getPages(),
+      child: BlocListener<AuthBloc, AuthState>(
+        // 👈 GLOBAL REDIRECT LOGIC
+        listener: (context, state) {
+          if (state is Authenticated) {
+            // Navigator key or finding the context to move to Home
+            // For now, individual screen listeners will handle specific jumps,
+            // but we ensure they clear the stack.
+          }
+        },
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Frisky Fruits',
+          initialRoute: Routes.splash,
+          routes: AppPages.getPages(),
+        ),
       ),
     );
   }
