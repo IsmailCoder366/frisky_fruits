@@ -1,5 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+// 👈 Add this import to handle Web-specific initialization
+import 'package:flutter_stripe_web/flutter_stripe_web.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+// Bloc Imports
 import 'core/navigation/bloc/navigation_bloc.dart';
 import 'core/routes/app_pages.dart';
 import 'core/routes/app_routes.dart';
@@ -7,18 +15,45 @@ import 'features/auth/bloc/auth_bloc.dart';
 import 'features/auth/bloc/auth_state.dart';
 import 'features/onboarding/logic/onboarding_bloc.dart';
 import 'features/products/bloc/cart_bloc/cart_bloc.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+import 'features/checkout/bloc/payment_bloc.dart';
+import 'features/checkout/repository/payment_repository.dart';
 
+void main() async {
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
 
-void main() async{
+    // 1. Initialize Firebase
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
 
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  runApp(const FriskyFruitsApp());
+    const String publishableKey = 'pk_test_51T10eBD10vI0fYch2iHtn6A8TZA1eYxZjdpnJEJuEVt8ob57VlxhTEKSQuRz0P4jjHOV8zOmK96dhmLwxHIxkhSa004KmHJPYS';
 
+    // 2. Stripe Initialization (Web vs Mobile check)
+    if (kIsWeb) {
+      // 🚀 Using WebStripe prevents the Platform._operatingSystem exception
+      WebStripe.instance.initialise(publishableKey: publishableKey);
+    } else {
+      Stripe.publishableKey = publishableKey;
+      await Stripe.instance.applySettings();
+    }
+
+    runApp(const FriskyFruitsApp());
+  } catch (e) {
+    debugPrint("Critical Initialization Error: $e");
+    runApp(
+      MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text("Init Error: $e", textAlign: TextAlign.center),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class FriskyFruitsApp extends StatelessWidget {
@@ -31,23 +66,17 @@ class FriskyFruitsApp extends StatelessWidget {
         BlocProvider(create: (context) => AuthBloc()),
         BlocProvider(create: (context) => OnboardingBloc()),
         BlocProvider(create: (context) => NavigationBloc()),
+        // Explicitly typed BLoC provider for better error handling
         BlocProvider<CartBloc>(create: (context) => CartBloc()),
-      ],
-      child: BlocListener<AuthBloc, AuthState>(
-        // 👈 GLOBAL REDIRECT LOGIC
-        listener: (context, state) {
-          if (state is Authenticated) {
-            // Navigator key or finding the context to move to Home
-            // For now, individual screen listeners will handle specific jumps,
-            // but we ensure they clear the stack.
-          }
-        },
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Frisky Fruits',
-          initialRoute: Routes.splash,
-          routes: AppPages.getPages(),
+        BlocProvider<PaymentBloc>(
+          create: (context) => PaymentBloc(PaymentRepository()),
         ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Frisky Fruits',
+        initialRoute: Routes.splash,
+        routes: AppPages.getPages(),
       ),
     );
   }
