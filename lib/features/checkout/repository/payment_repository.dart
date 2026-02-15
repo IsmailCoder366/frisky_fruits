@@ -1,24 +1,35 @@
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class PaymentRepository {
-  // Replace with your actual backend URL (Firebase Function or Node.js)
-  final String backendUrl = "https://api.stripe.com/v1/payment-intent";
+  final String backendUrl = "https://api.stripe.com/v1/payment_intents";
 
   Future<Map<String, dynamic>> createPaymentIntent(double amount, String currency) async {
+    // 1. Get the secret key from your .env file
+    final String secretKey = dotenv.env['STRIPE_SECRET_KEY'] ?? "";
+
     try {
       final response = await http.post(
         Uri.parse(backendUrl),
+        headers: {
+          'Authorization': 'Bearer $secretKey', // 👈 Stripe requires this header
+          'Content-Type': 'application/x-www-form-urlencoded', // 👈 Corrected dash
+        },
         body: {
           'amount': (amount * 100).toInt().toString(), // Stripe expects cents
           'currency': currency,
+          'payment_method_types[]': 'card', // 👈 Recommended to specify
         },
-        headers: {
-          'Authorization': 'Bearer sk_test_51T10eBD10vI0fYchWUoPKPunWA6o9PEZDihYb6pWefTxcf9UpOeThy8uxCor6JIg0xNfM7nYutq2CaMM0V6vrYfn00MNEEDCVW',
-          'Content_Type' : 'application/x-www-form-urlencoded'
-        }
       );
-      return jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body);
+      } else {
+        // This helps you debug if Stripe rejects the request
+        final errorBody = jsonDecode(response.body);
+        throw Exception(errorBody['error']['message'] ?? "Stripe API Error");
+      }
     } catch (e) {
       throw Exception("Failed to create Payment Intent: $e");
     }

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 // 👈 Add this import to handle Web-specific initialization
 import 'package:flutter_stripe_web/flutter_stripe_web.dart';
@@ -27,14 +28,13 @@ void main() async {
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
-    const String publishableKey = 'pk_test_51T10eBD10vI0fYch2iHtn6A8TZA1eYxZjdpnJEJuEVt8ob57VlxhTEKSQuRz0P4jjHOV8zOmK96dhmLwxHIxkhSa004KmHJPYS';
-
+    await dotenv.load(fileName: ".env");
     // 2. Stripe Initialization (Web vs Mobile check)
     if (kIsWeb) {
       // 🚀 Using WebStripe prevents the Platform._operatingSystem exception
-      WebStripe.instance.initialise(publishableKey: publishableKey);
+      WebStripe.instance.initialise(publishableKey: dotenv.env['STRIPE_PUBLISHABLE_KEY'] ?? "");
     } else {
-      Stripe.publishableKey = publishableKey;
+      Stripe.publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY'] ?? "";
       await Stripe.instance.applySettings();
     }
 
