@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/routes/app_routes.dart';
+import '../../home/bloc/favorite_bloc.dart';
+import '../../home/bloc/favorite_event.dart';
+import '../../home/bloc/favorite_state.dart';
 import '../models/product_model.dart';
 
 class ProductGridItem extends StatelessWidget {
@@ -10,11 +14,11 @@ class ProductGridItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         Navigator.pushNamed(
           context,
           Routes.productDetails,
-          arguments: product, // Pass the product model to the details screen
+          arguments: product,
         );
       },
       child: ClipRRect(
@@ -25,7 +29,7 @@ class ProductGridItem extends StatelessWidget {
             Positioned.fill(
               child: Image.asset(product.imagePath, fit: BoxFit.cover),
             ),
-            // Dark Gradient Overlay for text readability
+            // Dark Gradient Overlay
             Positioned.fill(
               child: Container(
                 decoration: BoxDecoration(
@@ -37,15 +41,36 @@ class ProductGridItem extends StatelessWidget {
                 ),
               ),
             ),
-            // Heart Icon
+
+            // --- FAVORITE LOGIC START ---
             Positioned(
               top: 10,
               left: 10,
-              child: Icon(
-                product.isFavorite ? Icons.favorite : Icons.favorite_border,
-                color: product.isFavorite ? Colors.red : Colors.white,
+              child: BlocBuilder<FavoritesBloc, FavoritesState>(
+                builder: (context, state) {
+                  // Logic: Check if this specific fruit name is in the BLoC's list
+                  bool isFavorite = state.favoriteItems.any((item) => item['title'] == product.name);
+
+                  return GestureDetector(
+                    onTap: () {
+                      // Logic: Convert model to Map and send to BLoC
+                      final productMap = {
+                        'title': product.name,
+                        'price': product.price,
+                        'imagePath': product.imagePath,
+                      };
+                      context.read<FavoritesBloc>().add(ToggleFavorite(productMap));
+                    },
+                    child: Icon(
+                      isFavorite ? Icons.favorite : Icons.favorite_border,
+                      color: isFavorite ? Colors.red : Colors.white,
+                    ),
+                  );
+                },
               ),
             ),
+            // --- FAVORITE LOGIC END ---
+
             // Product Info
             Positioned(
               bottom: 15,

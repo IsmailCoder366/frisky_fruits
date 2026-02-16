@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frisky_fruits/features/home/bloc/favorite_event.dart';
-import 'package:http/http.dart';
-
 import '../bloc/favorite_bloc.dart';
 import '../bloc/favorite_state.dart';
 

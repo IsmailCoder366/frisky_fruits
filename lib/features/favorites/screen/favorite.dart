@@ -71,7 +71,7 @@ class FavoritesScreen extends StatelessWidget {
                 child: Center(
                   child: Image.asset(
                     product['imagePath'] ?? 'assets/images/placeholder.png',
-                    height: 80,
+                    height: 180,
                   ),
                 ),
               ),
