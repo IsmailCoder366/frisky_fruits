@@ -11,6 +11,4 @@ class CartState {
     return items.fold(0.0, (total, current) => total + current.totalItemPrice);
   }
 
-  /// Helper to get the total number of items (useful for cart badges)
-  int get itemCount => items.length;
 }

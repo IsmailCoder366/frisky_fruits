@@ -6,6 +6,7 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 // 👈 Add this import to handle Web-specific initialization
 import 'package:flutter_stripe_web/flutter_stripe_web.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'features/home/bloc/favorite_bloc.dart';
 import 'firebase_options.dart';
 
 // Bloc Imports
@@ -66,11 +67,9 @@ class FriskyFruitsApp extends StatelessWidget {
         BlocProvider(create: (context) => AuthBloc()),
         BlocProvider(create: (context) => OnboardingBloc()),
         BlocProvider(create: (context) => NavigationBloc()),
-        // Explicitly typed BLoC provider for better error handling
         BlocProvider<CartBloc>(create: (context) => CartBloc()),
-        BlocProvider<PaymentBloc>(
-          create: (context) => PaymentBloc(PaymentRepository()),
-        ),
+        BlocProvider<PaymentBloc>(create: (context) => PaymentBloc(PaymentRepository())),
+        BlocProvider<FavoritesBloc>(create: (context) => FavoritesBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

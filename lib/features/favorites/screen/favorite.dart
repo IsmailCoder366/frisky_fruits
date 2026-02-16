@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../home/bloc/favorite_bloc.dart';
+import '../../home/bloc/favorite_event.dart';
+import '../../home/bloc/favorite_state.dart';
+
 
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({super.key});
@@ -19,23 +24,38 @@ class FavoritesScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: GridView.builder(
-          itemCount: 4, // Replace with your favorites list length
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 0.75,
-            crossAxisSpacing: 15,
-            mainAxisSpacing: 15,
-          ),
-          itemBuilder: (context, index) {
-            return _buildFavoriteItem(context);
+        // 1. Use BlocBuilder to listen to changes in the favorite list
+        child: BlocBuilder<FavoritesBloc, FavoritesState>(
+          builder: (context, state) {
+            // Logic: Show a placeholder if the list is empty
+            if (state.favoriteItems.isEmpty) {
+              return const Center(
+                child: Text("Your favorite list is empty!"),
+              );
+            }
+
+            return GridView.builder(
+              itemCount: state.favoriteItems.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.75,
+                crossAxisSpacing: 15,
+                mainAxisSpacing: 15,
+              ),
+              itemBuilder: (context, index) {
+                // Logic: Get the specific product data for this card
+                final product = state.favoriteItems[index];
+                return _buildFavoriteItem(context, product);
+              },
+            );
           },
         ),
       ),
     );
   }
 
-  Widget _buildFavoriteItem(BuildContext context) {
+  // 2. Pass the product Map into the builder
+  Widget _buildFavoriteItem(BuildContext context, Map<String, String> product) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.grey[50],
@@ -47,24 +67,22 @@ class FavoritesScreen extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 1. Product Image
               Expanded(
                 child: Center(
                   child: Image.asset(
-                    'assets/images/grapes.png', // Replace with dynamic image
+                    product['imagePath'] ?? 'assets/images/placeholder.png',
                     height: 80,
                   ),
                 ),
               ),
-              // 2. Product Details
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Red Apple",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    Text(
+                      product['title'] ?? "Unknown",
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                     const Text(
                       "1kg, Price",
@@ -74,15 +92,13 @@ class FavoritesScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          "\$4.99",
-                          style: TextStyle(
+                        Text(
+                          product['price'] ?? "\$0.00",
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
-                              color: Color(0xFFF2994A)
-                          ),
+                              color: Color(0xFFF2994A)),
                         ),
-                        // Quick Add Button
                         Container(
                           decoration: const BoxDecoration(
                             color: Color(0xFFFFCC4D),
@@ -98,13 +114,13 @@ class FavoritesScreen extends StatelessWidget {
               ),
             ],
           ),
-          // 3. Remove from Favorites Button
           Positioned(
             top: 10,
             right: 10,
             child: GestureDetector(
               onTap: () {
-                // Logic to remove from favorites
+                // Logic: Remove from favorites using the same Toggle event
+                context.read<FavoritesBloc>().add(ToggleFavorite(product));
               },
               child: const Icon(
                 Icons.favorite,

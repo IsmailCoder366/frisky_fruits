@@ -10,7 +10,7 @@ class TrendingDealsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         context.read<NavigationBloc>().add(TabChanged(2));
       },
       child: GridView.count(
@@ -20,11 +20,31 @@ class TrendingDealsGrid extends StatelessWidget {
         childAspectRatio: 0.8,
         crossAxisSpacing: 15,
         mainAxisSpacing: 15,
-        children: const [
-          DealCard(title: "Avocado", price: "\$6.7", imagePath: 'assets/images/avocadro.png'),
-          DealCard(title: "Brocoli", price: "\$8.7", imagePath: 'assets/images/brocoli.png'),
-          DealCard(title: "Tomato", price: "\$4.9", imagePath: 'assets/images/tomato.png'),
-          DealCard(title: "Grapes", price: "\$7.2", imagePath: 'assets/images/grapes.png'),
+        children: [
+          DealCard(
+            title: "Avocado",
+            price: "\$6.7",
+            imagePath: 'assets/images/avocadro.png',
+
+          ),
+          DealCard(
+            title: "Brocoli",
+            price: "\$8.7",
+            imagePath: 'assets/images/brocoli.png',
+
+          ),
+          DealCard(
+            title: "Tomato",
+            price: "\$4.9",
+            imagePath: 'assets/images/tomato.png',
+
+          ),
+          DealCard(
+            title: "Grapes",
+            price: "\$7.2",
+            imagePath: 'assets/images/grapes.png',
+
+          ),
         ],
       ),
     );

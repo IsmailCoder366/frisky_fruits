@@ -18,7 +18,7 @@ class PaymentMethodScreen extends StatefulWidget {
 }
 
 class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
-  bool isCreditCard = true;
+  bool isCreditCard = false;
   int selectedCardIndex = 0;
   final TextEditingController _expiryController = TextEditingController();
 
