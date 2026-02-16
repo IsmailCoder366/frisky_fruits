@@ -3,18 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-// 👈 Add this import to handle Web-specific initialization
-import 'package:flutter_stripe_web/flutter_stripe_web.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'features/home/bloc/favorite_bloc.dart';
 import 'firebase_options.dart';
-
-// Bloc Imports
 import 'core/navigation/bloc/navigation_bloc.dart';
 import 'core/routes/app_pages.dart';
 import 'core/routes/app_routes.dart';
 import 'features/auth/bloc/auth_bloc.dart';
-import 'features/auth/bloc/auth_state.dart';
 import 'features/onboarding/logic/onboarding_bloc.dart';
 import 'features/products/bloc/cart_bloc/cart_bloc.dart';
 import 'features/checkout/bloc/payment_bloc.dart';
@@ -30,20 +25,16 @@ void main() async {
     );
 
     await dotenv.load(fileName: ".env");
-    // 2. Stripe Initialization (Web vs Mobile check)
-    if (kIsWeb) {
-      // 🚀 Using WebStripe prevents the Platform._operatingSystem exception
-      WebStripe.instance.initialise(publishableKey: dotenv.env['STRIPE_PUBLISHABLE_KEY'] ?? "");
-    } else {
+
       Stripe.publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY'] ?? "";
       await Stripe.instance.applySettings();
-    }
 
     runApp(const FriskyFruitsApp());
   } catch (e) {
     debugPrint("Critical Initialization Error: $e");
     runApp(
       MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
           body: Center(
             child: Padding(

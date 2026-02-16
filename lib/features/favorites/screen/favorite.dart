@@ -67,6 +67,7 @@ class FavoritesScreen extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 5),
               Expanded(
                 child: Center(
                   child: Image.asset(
@@ -80,6 +81,7 @@ class FavoritesScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(height: 5),
                     Text(
                       product['title'] ?? "Unknown",
                       style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
@@ -116,7 +118,7 @@ class FavoritesScreen extends StatelessWidget {
           ),
           Positioned(
             top: 10,
-            right: 10,
+            right: 5,
             child: GestureDetector(
               onTap: () {
                 // Logic: Remove from favorites using the same Toggle event
